@@ -12,6 +12,7 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
+    'arrow-body-style': 'off',
   },
   parser: 'babel-eslint',
 };

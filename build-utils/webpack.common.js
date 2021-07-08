@@ -30,7 +30,6 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-
     }),
     new ESLintWebpackPlugin({
       fix: true,
