@@ -5,7 +5,7 @@ const createItem = (item) => {
   return li;
 };
 
-const createItemList = (target, items) => {
+const createItemList = (target, { items = [] }) => {
   const cloneTarget = target.cloneNode(false);
   items.forEach((item) => {
     cloneTarget.append(createItem(item));

@@ -5,7 +5,15 @@
 <body>
   <div class="container mt-3">
     <h1>FWL Workshop</h1>
-    <div id="app"></div>
+    <input class="form-control" data-component="item-filter"/>
+    <hr>
+    <div id="app">
+      <p class="alert alert-info" data-component="item-counter">Qui ci andranno gli items</p>
+      <hr>
+      <ul class="list-group" data-component="item-list"></ul>
+    </div>
+    <hr>
+    <button class="btn btn-primary" data-component='item-add'>Aggiungi</button>
   </div>
 </body>
 </html>
