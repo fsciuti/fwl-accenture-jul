@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'arrow-body-style': 'off',
+    'max-len': ['error', { code: 120 }],
   },
   parser: 'babel-eslint',
 };

@@ -1,29 +1,28 @@
 import FakeData from './fake-data';
-import RenderEngine from './view/render';
+
+import * as vDom from './vdom/vdom';
 
 import items from './view/components/items';
 import counter from './view/components/counter';
+import button from './view/components/button';
+import filter from './view/components/filter';
 
-import Registry from './view/registry';
-
-const state = {
-  items: FakeData.getItems(),
-};
+const state = { items: FakeData.getItems() };
 
 let app = document.getElementById('app');
-
-Registry.add('item-list', items.createItemList);
-Registry.add('item-counter', counter);
+vDom.registry.set('item-list', items);
+vDom.registry.set('item-counter', counter);
+vDom.registry.set('item-button', button);
+vDom.registry.set('item-filter', filter);
 
 const render = (newState) => {
   window.requestAnimationFrame(() => {
-    const clonedApp = RenderEngine.renderRoot(app, newState);
-    app.replaceWith(clonedApp);
-    app = clonedApp;
+    const clonedApp = vDom.render(vDom.mapper.mapRootNode(app, newState));
+    app = vDom.mount(clonedApp, app);
   });
 };
 
-document.querySelector('[data-component=item-filter]').addEventListener('input', (evt) => {
+vDom.events.set('filter', (evt) => {
   const filteredItems = state.items.filter((item) => {
     return item.toLowerCase().includes(evt.target.value.toLowerCase());
   });
@@ -31,11 +30,10 @@ document.querySelector('[data-component=item-filter]').addEventListener('input',
   render({ ...state, items: filteredItems });
 });
 
-document.querySelector('[data-component=item-add]').addEventListener('click', () => {
+vDom.events.set('add', () => {
   const newItem = FakeData.getItem();
   state.items.push(newItem);
   render({ ...state });
-  document.querySelector('[data-component=item-filter]').dispatchEvent(new Event('input'));
 });
 
 render({ ...state });

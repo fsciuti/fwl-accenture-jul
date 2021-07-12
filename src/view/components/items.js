@@ -1,17 +1,14 @@
-const createItem = (item) => {
-  const li = document.createElement('li');
-  li.classList.add('list-group-item');
-  li.innerText = item;
-  return li;
+import component from '../component';
+
+const getHTML = (items) => items.reduce((templateStr, item) => {
+  return `
+    ${templateStr}
+    <li class='list-group-item'>
+      ${item}
+    </li>
+  `;
+}, '');
+
+export default (vTarget, { items = [] }) => {
+  return component(vTarget, getHTML(items));
 };
-
-const createItemList = (target, { items = [] }) => {
-  const cloneTarget = target.cloneNode(false);
-  items.forEach((item) => {
-    cloneTarget.append(createItem(item));
-  });
-
-  return cloneTarget;
-};
-
-export default { createItem, createItemList };
