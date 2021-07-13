@@ -9,16 +9,21 @@ import filter from './view/components/filter';
 
 const state = { items: FakeData.getItems() };
 
-let app = document.getElementById('app');
+let app = document.querySelector('#app');
+
 vDom.registry.set('item-list', items);
 vDom.registry.set('item-counter', counter);
 vDom.registry.set('item-button', button);
 vDom.registry.set('item-filter', filter);
 
+let previousVDom = {};
+
 const render = (newState) => {
   window.requestAnimationFrame(() => {
-    const clonedApp = vDom.render(vDom.mapper.mapRootNode(app, newState));
-    app = vDom.mount(clonedApp, app);
+    const clonedVDom = vDom.mapper.mapRootNode(app, newState);
+    const patch = vDom.diff(previousVDom, clonedVDom);
+    app = patch(app);
+    previousVDom = clonedVDom;
   });
 };
 
